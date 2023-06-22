@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+}
+
+input[type='text'] {
+  outline: none;
+}
+
+body {
+  background-color: #e6e6e6;
+}
+
+button {
+  background-color: #c4d8e2;
+}
+
+#searchDiv {
+  background-color: #c4d8e2;
+}
