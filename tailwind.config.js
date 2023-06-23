@@ -2,7 +2,9 @@
 module.exports = {
   content: ["./dist/*.html", "./src/*.js", "./src/*ts"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: "Quicksand",
+    },
   },
   variants: {
     extend: {},

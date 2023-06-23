@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,7 +8,11 @@
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 
-input[type='text'] {
+html {
+  font-family: "Quicksand", sans-serif;
+}
+
+input[type="text"] {
   outline: none;
 }
 
@@ -15,9 +21,5 @@ body {
 }
 
 button {
-  background-color: #c4d8e2;
-}
-
-#searchDiv {
   background-color: #c4d8e2;
 }

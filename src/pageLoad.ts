@@ -36,8 +36,7 @@ function createInputButton(): HTMLButtonElement {
   inputButton.classList.add(
     "px-2",
     "rounded-r-3xl",
-    "material-symbols-outlined",
-    "bg-orange-400"
+    "material-symbols-outlined"
   );
   inputButton.addEventListener("click", () => {
     const inputField: HTMLInputElement = document.querySelector("input");
