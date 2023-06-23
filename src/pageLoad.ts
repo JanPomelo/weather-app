@@ -17,7 +17,7 @@ function createContentDiv(): HTMLDivElement {
 function createSearchDiv(): HTMLDivElement {
   const div: HTMLDivElement = document.createElement("div");
   div.id = "searchDiv";
-  div.classList.add("flex", "rounded-3xl", "h-12", "mx-4");
+  div.classList.add("flex", "rounded-3xl", "h-12", "mx-4", 'md:justify-end', 'md:mr-10');
   div.appendChild(createInputField());
   div.appendChild(createInputButton());
   return div;
@@ -26,7 +26,7 @@ function createSearchDiv(): HTMLDivElement {
 function createInputField(): HTMLInputElement {
   const userInput: HTMLInputElement = document.createElement("input");
   userInput.type = "text";
-  userInput.classList.add("grow", "rounded-l-3xl", "pl-4", "text-xl");
+  userInput.classList.add("grow", 'md:grow-0', "rounded-l-3xl", "pl-4", "text-xl");
   return userInput;
 }
 
