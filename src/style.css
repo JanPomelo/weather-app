@@ -23,3 +23,8 @@ body {
 button {
   background-color: #c4d8e2;
 }
+
+#backgroundIMG {
+  position: absolute;
+  z-index: -1;
+}
