@@ -21,8 +21,9 @@ export function createFirstContent(): void {
 
 function createContentDiv(): HTMLDivElement {
   const div: HTMLDivElement = document.createElement("div");
-  div.classList.add("grow", "grid", "md:grid-cols-2", "md:grid-rows-2");
+  div.classList.add("grow", 'flex', 'flex-col', 'gap-3', "md:grid", "md:grid-cols-2", "md:grid-rows-2");
   div.appendChild(createGeneralInformationDiv());
+  div.appendChild(createTodayInfo());
   return div;
 }
 
@@ -38,15 +39,22 @@ function createGeneralInformationDiv(): HTMLDivElement {
   const temp_c: HTMLElement = document.createElement("p");
   temp_c.id = "temp_c";
   temp_c.classList.add("text-4xl");
+  const condition: HTMLDivElement = document.createElement("div");
+  condition.classList.add("flex", "gap-3", "items-center");
   const conditionText: HTMLElement = document.createElement("p");
   conditionText.id = "conditionText";
-  conditionText.classList.add("text-2xl", "pl-1", "font-bold", "mt-1");
+  conditionText.classList.add("text-xl", "pl-1", "font-bold");
+  const conditionPic: HTMLImageElement = document.createElement("img");
+  conditionPic.id = "conditionPic";
+  conditionPic.classList.add("h-10");
   const time: HTMLElement = document.createElement("p");
   time.id = "time";
   div.appendChild(city);
   div.appendChild(country);
   div.appendChild(temp_c);
-  div.appendChild(conditionText);
+  div.appendChild(condition);
+  condition.appendChild(conditionText);
+  condition.appendChild(conditionPic);
   div.appendChild(time);
   city.innerText = "Bangkok";
   country.innerText = "Thailand";
@@ -57,15 +65,39 @@ function createGeneralInformationDiv(): HTMLDivElement {
 
 function createTodayInfo(): HTMLDivElement {
   const div: HTMLDivElement = document.createElement("div");
-  div.classList.add("flex", "flex-col", "text-white", "pl-5");
+  div.classList.add("grid", "grid-cols-2", "text-white", "pl-5");
+  const curTimeStatic: HTMLElement = document.createElement('p');
+  curTimeStatic.innerText = 'Local Time'
+  curTimeStatic.classList.add('font-bold', 'text-lg');
   const curTime: HTMLElement = document.createElement("p");
   curTime.id = "curTime";
+  const curHumidStatic: HTMLElement = document.createElement("p");
+  curHumidStatic.innerText = "Humidity";
+  curHumidStatic.classList.add("font-bold", "text-lg");
   const curHumid: HTMLElement = document.createElement("p");
   curHumid.id = "curHumid";
+  const wind_kphStatic: HTMLElement = document.createElement("p");
+  wind_kphStatic.innerText = "Wind speed";
+  wind_kphStatic.classList.add("font-bold", "text-lg");
   const wind_kph: HTMLElement = document.createElement("p");
   wind_kph.id = "wind_kph";
+  const wind_dirStatic: HTMLElement = document.createElement("p");
+  wind_dirStatic.innerText = "Wind Direction";
+  wind_dirStatic.classList.add("font-bold", "text-lg");
   const wind_dir: HTMLElement = document.createElement("p");
   wind_dir.id = "wind_dir";
+  div.appendChild(curTimeStatic);
+  div.appendChild(curTime);
+  div.appendChild(curHumidStatic);
+  div.appendChild(curHumid);
+  div.appendChild(wind_kphStatic);
+  div.appendChild(wind_kph);
+  div.appendChild(wind_dirStatic);
+  div.appendChild(wind_dir);
+  curTime.innerText = '11:59'
+  curHumid.innerText = "84 %";
+  wind_kph.innerText = "6 kph";
+  wind_dir.innerText = "North East";
   return div;
 }
 
