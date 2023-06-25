@@ -33,6 +33,7 @@ function createContentDiv(): HTMLDivElement {
   div.appendChild(createGeneralInformationDiv());
   div.appendChild(createTodayInfo());
   div.appendChild(createWindAndPressure());
+  div.appendChild(createForecast());
   return div;
 }
 
@@ -167,6 +168,19 @@ function createWindAndPressure(): HTMLDivElement {
   div.appendChild(wind_kph);
   div.appendChild(pressure_static);
   div.appendChild(pressure_mb);
+  bigDiv.appendChild(heading);
+  bigDiv.appendChild(div);
+  return bigDiv;
+}
+
+function createForecast(): HTMLDivElement {
+  const bigDiv: HTMLDivElement = document.createElement("div");
+  bigDiv.classList.add("flex", "flex-col", "gap-1", 'border-t-4', 'border-white', 'md:border-0');
+  const heading: HTMLHeadingElement = document.createElement("h3");
+  heading.classList.add("text-white", "font-bold", "text-4xl", "pl-5");
+  heading.innerText = "Forecast";
+  const div: HTMLDivElement = document.createElement("div");
+  div.classList.add();
   bigDiv.appendChild(heading);
   bigDiv.appendChild(div);
   return bigDiv;
