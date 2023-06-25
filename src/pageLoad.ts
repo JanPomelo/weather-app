@@ -1,5 +1,5 @@
 "use strict";
-import { fillGeneralData } from "./fillLocationData";
+import { fillGeneralData, fillTodayInfo, fillWindAndPressure } from "./fillLocationData";
 import { getData } from "./getWeatherData";
 import Background from "./img/background.jpeg";
 
@@ -21,9 +21,18 @@ export function createFirstContent(): void {
 
 function createContentDiv(): HTMLDivElement {
   const div: HTMLDivElement = document.createElement("div");
-  div.classList.add("grow", 'flex', 'flex-col', 'gap-3', "md:grid", "md:grid-cols-2", "md:grid-rows-2");
+  div.classList.add(
+    "grow",
+    "flex",
+    "flex-col",
+    "gap-3",
+    "md:grid",
+    "md:grid-cols-2",
+    "md:grid-rows-2"
+  );
   div.appendChild(createGeneralInformationDiv());
   div.appendChild(createTodayInfo());
+  div.appendChild(createWindAndPressure());
   return div;
 }
 
@@ -64,41 +73,103 @@ function createGeneralInformationDiv(): HTMLDivElement {
 }
 
 function createTodayInfo(): HTMLDivElement {
+  const bigDiv: HTMLDivElement = document.createElement("div");
+  bigDiv.classList.add("flex", "flex-col", "gap-1");
+  const heading: HTMLHeadingElement = document.createElement("h3");
+  heading.classList.add("text-white", "font-bold", "text-2xl", "pl-5");
+  heading.innerText = "More Informations";
   const div: HTMLDivElement = document.createElement("div");
-  div.classList.add("grid", "grid-cols-2", "text-white", "pl-5");
-  const curTimeStatic: HTMLElement = document.createElement('p');
-  curTimeStatic.innerText = 'Local Time'
-  curTimeStatic.classList.add('font-bold', 'text-lg');
+  div.classList.add(
+    "grid",
+    "grid-cols-2",
+    "text-white",
+    "pl-5",
+    "rounded-xl",
+    "bg-black",
+    "bg-opacity-30",
+    'gap-x-2'
+  );
+  const curTimeStatic: HTMLElement = document.createElement("p");
+  curTimeStatic.innerText = "Local Time";
+  curTimeStatic.classList.add("font-bold", "text-lg");
   const curTime: HTMLElement = document.createElement("p");
   curTime.id = "curTime";
+  curTime.classList.add("font-bold", "text-lg");
   const curHumidStatic: HTMLElement = document.createElement("p");
   curHumidStatic.innerText = "Humidity";
   curHumidStatic.classList.add("font-bold", "text-lg");
   const curHumid: HTMLElement = document.createElement("p");
   curHumid.id = "curHumid";
+  curHumid.classList.add("font-bold", "text-lg");
+  const feelsLike_Static: HTMLElement = document.createElement("p");
+  feelsLike_Static.innerText = "Feels like";
+  feelsLike_Static.classList.add("font-bold", "text-lg");
+  const feelsLike_C: HTMLElement = document.createElement("p");
+  feelsLike_C.id = "feelslike_c";
+  feelsLike_C.classList.add("font-bold", "text-lg");
+  const airQStatic: HTMLElement = document.createElement("p");
+  airQStatic.innerText = "Air Quality (PM 2.5)";
+  airQStatic.classList.add("font-bold", "text-lg");
+  const airQ: HTMLElement = document.createElement("p");
+  airQ.id = "airQ";
+  airQ.classList.add("font-bold", "text-lg");
+  bigDiv.appendChild(heading);
+  bigDiv.appendChild(div);
+  div.appendChild(curTimeStatic);
+  div.appendChild(curTime);
+  div.appendChild(curHumidStatic);
+  div.appendChild(curHumid);
+  div.appendChild(feelsLike_Static);
+  div.appendChild(feelsLike_C);
+  div.appendChild(airQStatic);
+  div.appendChild(airQ);
+  return bigDiv;
+}
+
+function createWindAndPressure(): HTMLDivElement {
+  const bigDiv: HTMLDivElement = document.createElement("div");
+  bigDiv.classList.add("flex", "flex-col", "gap-1");
+  const heading: HTMLHeadingElement = document.createElement("h3");
+  heading.classList.add("text-white", "font-bold", "text-2xl", "pl-5");
+  heading.innerText = "Wind and Pressure";
+  const div: HTMLDivElement = document.createElement("div");
+  div.classList.add(
+    "grid",
+    "grid-cols-2",
+    "text-white",
+    "pl-5",
+    "rounded-xl",
+    "bg-black",
+    "bg-opacity-30",
+    'gap-x-2'
+  );
   const wind_kphStatic: HTMLElement = document.createElement("p");
   wind_kphStatic.innerText = "Wind speed";
   wind_kphStatic.classList.add("font-bold", "text-lg");
   const wind_kph: HTMLElement = document.createElement("p");
   wind_kph.id = "wind_kph";
+  wind_kph.classList.add("font-bold", "text-lg");
   const wind_dirStatic: HTMLElement = document.createElement("p");
   wind_dirStatic.innerText = "Wind Direction";
   wind_dirStatic.classList.add("font-bold", "text-lg");
   const wind_dir: HTMLElement = document.createElement("p");
   wind_dir.id = "wind_dir";
-  div.appendChild(curTimeStatic);
-  div.appendChild(curTime);
-  div.appendChild(curHumidStatic);
-  div.appendChild(curHumid);
-  div.appendChild(wind_kphStatic);
-  div.appendChild(wind_kph);
+  wind_dir.classList.add("font-bold", "text-lg");
+  const pressure_static: HTMLElement = document.createElement('p');
+  pressure_static.innerText = 'Air Pressure';
+  pressure_static.classList.add("font-bold", "text-lg");
+  const pressure_mb: HTMLElement = document.createElement("p");
+  pressure_mb.id = "pressure_mb";
+  pressure_mb.classList.add("font-bold", "text-lg");
   div.appendChild(wind_dirStatic);
   div.appendChild(wind_dir);
-  curTime.innerText = '11:59'
-  curHumid.innerText = "84 %";
-  wind_kph.innerText = "6 kph";
-  wind_dir.innerText = "North East";
-  return div;
+  div.appendChild(wind_kphStatic);
+  div.appendChild(wind_kph);
+  div.appendChild(pressure_static);
+  div.appendChild(pressure_mb);
+  bigDiv.appendChild(heading);
+  bigDiv.appendChild(div);
+  return bigDiv;
 }
 
 function createSearchDiv(): HTMLDivElement {
@@ -143,6 +214,8 @@ function createInputButton(): HTMLButtonElement {
     getData(inputField.value).then((data) => {
       console.log(data);
       fillGeneralData(data);
+      fillTodayInfo(data);
+      fillWindAndPressure(data);
     });
   });
   return inputButton;

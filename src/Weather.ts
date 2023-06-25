@@ -6,6 +6,10 @@ type condition = {
   text: string
 }
 
+type air_quality = {
+  pm2_5: number
+}
+
 type current = {
   cloud: number,
   condition: condition,
@@ -25,7 +29,8 @@ type current = {
   wind_degree: number,
   wind_dir: string,
   wind_kph: number,
-  wind_mph: number
+  wind_mph: number,
+  air_quality: air_quality
 }
 
 type location = {
@@ -38,8 +43,16 @@ type location = {
   tz_id: string
 }
 
+type forecastday = {
+  date: string
+}
+
+type Forecast = {
+  forecastday: forecastday
+}
+
 export type WeatherData = {
   current: current,
-  location: location
+  location: location,
 }
 
