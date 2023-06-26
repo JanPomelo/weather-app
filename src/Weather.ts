@@ -1,5 +1,7 @@
 'use strict';
 
+import { Container } from "postcss";
+
 type condition = {
   code: number,
   icon: string,
@@ -44,15 +46,51 @@ type location = {
 }
 
 type forecastday = {
-  date: string
+  date: string;
+  astro: astro;
+  day: day;
+  hour: hour[];
+};
+
+type astro = {
+  sunrise: string,
+  sunset: string
 }
 
-type Forecast = {
-  forecastday: forecastday
+type day = {
+  maxtemp_c: number,
+  maxtemp_f: number,
+  mintemp_c: number,
+  mintemp_f: number,
+  condition: condition,
+  air_quality: air_quality,
+  daily_will_it_rain: boolean,
+  daily_chance_of_rain: number,
+  daily_will_it_snow: boolean,
+  daily_chance_of_snow: number,
+  totalprecip_mm: number,
+  totalsnow_mm: number,
+}
+
+type hour = {
+  chance_of_rain: number,
+  chance_of_snow: number,
+  condition: condition,
+  temp_c: number,
+  temp_f: number,
+  time: string,
+  will_it_rain: boolean,
+  will_it_snow: boolean,
+
+}
+
+type forecast = {
+  forecastday: forecastday[]
 }
 
 export type WeatherData = {
   current: current,
   location: location,
+  forecast: forecast
 }
 

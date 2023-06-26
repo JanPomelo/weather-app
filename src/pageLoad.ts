@@ -1,5 +1,9 @@
 "use strict";
-import { fillGeneralData, fillTodayInfo, fillWindAndPressure } from "./fillLocationData";
+import {
+  fillGeneralData,
+  fillTodayInfo,
+  fillWindAndPressure,
+} from "./fillLocationData";
 import { getData } from "./getWeatherData";
 import Background from "./img/background.jpeg";
 
@@ -46,9 +50,25 @@ function createGeneralInformationDiv(): HTMLDivElement {
   const country: HTMLHeadingElement = document.createElement("h3");
   country.id = "country";
   country.classList.add("text-lg", "pl-6", "mb-3", "font-bold");
-  const temp_c: HTMLElement = document.createElement("p");
-  temp_c.id = "temp_c";
-  temp_c.classList.add("text-4xl");
+  const tempInfos: HTMLDivElement = document.createElement("div");
+  tempInfos.classList.add("flex", "gap-2", 'items-center');
+  const minTempDiv: HTMLDivElement = document.createElement("div");
+  minTempDiv.classList.add("flex", 'text-xl', 'items-center');
+  const minTempSymbol: HTMLElement = document.createElement("span");
+  minTempSymbol.classList.add("material-symbols-outlined", "pb-0.5");
+  minTempSymbol.innerText = "Keyboard_Double_Arrow_Down";
+  const minTempText: HTMLElement = document.createElement("span");
+  minTempText.id = "minTempText";
+  const curTemp: HTMLElement = document.createElement("p");
+  curTemp.id = "curTemp";
+  const maxTempDiv: HTMLDivElement = document.createElement("div");
+  maxTempDiv.classList.add("flex", 'text-xl', 'items-center');
+  const maxTempSymbol: HTMLElement = document.createElement("span");
+  maxTempSymbol.classList.add('material-symbols-outlined', 'pt-0.5');
+  maxTempSymbol.innerText = 'Keyboard_Double_Arrow_Up';
+  const maxTempText: HTMLElement = document.createElement("span");
+  maxTempText.id = "maxTempText";
+  curTemp.classList.add("text-4xl");
   const condition: HTMLDivElement = document.createElement("div");
   condition.classList.add("flex", "gap-3", "items-center");
   const conditionText: HTMLElement = document.createElement("p");
@@ -61,14 +81,23 @@ function createGeneralInformationDiv(): HTMLDivElement {
   time.id = "time";
   div.appendChild(city);
   div.appendChild(country);
-  div.appendChild(temp_c);
+  div.appendChild(tempInfos);
+  tempInfos.appendChild(minTempDiv);
+  minTempDiv.appendChild(minTempSymbol);
+  minTempDiv.appendChild(minTempText);
+  tempInfos.appendChild(curTemp);
+  tempInfos.appendChild(maxTempDiv);
+  maxTempDiv.appendChild(maxTempSymbol);
+  maxTempDiv.appendChild(maxTempText);
   div.appendChild(condition);
   condition.appendChild(conditionText);
   condition.appendChild(conditionPic);
   div.appendChild(time);
   city.innerText = "Bangkok";
   country.innerText = "Thailand";
-  temp_c.innerText = "36 °C";
+  minTempText.innerText = '28 °C';
+  maxTempText.innerText = "38 °C";
+  curTemp.innerText = "36 °C";
   conditionText.innerText = "party snoudy";
   return div;
 }
@@ -88,7 +117,7 @@ function createTodayInfo(): HTMLDivElement {
     "rounded-xl",
     "bg-black",
     "bg-opacity-30",
-    'gap-x-2'
+    "gap-x-2"
   );
   const curTimeStatic: HTMLElement = document.createElement("p");
   curTimeStatic.innerText = "Local Time";
@@ -142,7 +171,7 @@ function createWindAndPressure(): HTMLDivElement {
     "rounded-xl",
     "bg-black",
     "bg-opacity-30",
-    'gap-x-2'
+    "gap-x-2"
   );
   const wind_kphStatic: HTMLElement = document.createElement("p");
   wind_kphStatic.innerText = "Wind speed";
@@ -156,8 +185,8 @@ function createWindAndPressure(): HTMLDivElement {
   const wind_dir: HTMLElement = document.createElement("p");
   wind_dir.id = "wind_dir";
   wind_dir.classList.add("font-bold", "text-lg");
-  const pressure_static: HTMLElement = document.createElement('p');
-  pressure_static.innerText = 'Air Pressure';
+  const pressure_static: HTMLElement = document.createElement("p");
+  pressure_static.innerText = "Air Pressure";
   pressure_static.classList.add("font-bold", "text-lg");
   const pressure_mb: HTMLElement = document.createElement("p");
   pressure_mb.id = "pressure_mb";
@@ -175,7 +204,14 @@ function createWindAndPressure(): HTMLDivElement {
 
 function createForecast(): HTMLDivElement {
   const bigDiv: HTMLDivElement = document.createElement("div");
-  bigDiv.classList.add("flex", "flex-col", "gap-1", 'border-t-4', 'border-white', 'md:border-0');
+  bigDiv.classList.add(
+    "flex",
+    "flex-col",
+    "gap-1",
+    "border-t-4",
+    "border-white",
+    "md:border-0"
+  );
   const heading: HTMLHeadingElement = document.createElement("h3");
   heading.classList.add("text-white", "font-bold", "text-4xl", "pl-5");
   heading.innerText = "Forecast";

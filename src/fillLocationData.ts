@@ -24,13 +24,19 @@ function translateWindDir(shortVersion: string): string {
 export function fillGeneralData(data: WeatherData): void {
   const city: HTMLHeadingElement = document.querySelector("#city");
   const country: HTMLHeadingElement = document.querySelector("#country");
-  const temp_c: HTMLElement = document.querySelector("#temp_c");
+  const minTemp: HTMLElement = document.querySelector("#minTempText");
+  const curTemp: HTMLElement = document.querySelector("#curTemp");
+  const maxTemp: HTMLElement = document.querySelector("#maxTempText");
   const conditionText: HTMLElement = document.querySelector("#conditionText");
   const conditionPic: HTMLImageElement =
     document.querySelector("#conditionPic");
   city.innerText = data.location.name;
   country.innerText = data.location.country;
-  temp_c.innerText = data.current.temp_c.toString() + " °C";
+  minTemp.innerText =
+    Math.floor(data.forecast.forecastday[0].day.mintemp_c).toString() + " °C";
+  curTemp.innerText = data.current.temp_c.toString() + " °C";
+  maxTemp.innerText =
+    Math.round(data.forecast.forecastday[0].day.maxtemp_c).toString() + " °C";
   conditionText.innerText = data.current.condition.text;
   conditionPic.src = data.current.condition.icon;
 }
@@ -51,8 +57,8 @@ export function fillTodayInfo(data: WeatherData): void {
 export function fillWindAndPressure(data: WeatherData): void {
   const wind_kph: HTMLElement = document.querySelector("#wind_kph");
   const wind_dir: HTMLElement = document.querySelector("#wind_dir");
-  const pressure: HTMLElement = document.querySelector('#pressure_mb');
+  const pressure: HTMLElement = document.querySelector("#pressure_mb");
   wind_kph.innerText = data.current.wind_kph.toString() + " kph";
   wind_dir.innerText = translateWindDir(data.current.wind_dir);
-  pressure.innerText = data.current.pressure_mb.toString() + ' mbar';
+  pressure.innerText = data.current.pressure_mb.toString() + " mbar";
 }
