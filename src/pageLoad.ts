@@ -20,7 +20,7 @@ export function createFirstContent(): void {
   img.id = "backgroundIMG";
   img.classList.add("h-full", "xl:w-full", "object-cover");
   document.querySelector("body").appendChild(img);
-  main.appendChild(createSearchDiv());
+  main.appendChild(createSearchandApiDiv());
   main.appendChild(createContentDiv());
 }
 
@@ -36,8 +36,8 @@ function createContentDiv(): HTMLDivElement {
     "md:grid-rows-2"
   );
   div.appendChild(createGeneralInformationDiv());
-  const todayDiv: HTMLDivElement = document.createElement('div');
-  todayDiv.classList.add('flex', 'flex-col', 'gap-5')
+  const todayDiv: HTMLDivElement = document.createElement("div");
+  todayDiv.classList.add("flex", "flex-col", "gap-5");
   div.appendChild(todayDiv);
   todayDiv.appendChild(createTodayInfo());
   todayDiv.appendChild(createMoreInformation());
@@ -281,6 +281,43 @@ function createForecast(): HTMLDivElement {
   bigDiv.appendChild(heading);
   bigDiv.appendChild(div);
   return bigDiv;
+}
+
+function createAPIDiv(): HTMLDivElement {
+  const div: HTMLDivElement = document.createElement("div");
+  div.classList.add(
+    "text-white",
+    "flex",
+    "text-sm",
+    "justify-between",
+    "px-5",
+    "mt-2",
+    "items-center",
+    "md:justify-start",
+    "md:gap-2"
+  );
+  const text: HTMLElement = document.createElement("p");
+  const logo: HTMLImageElement = document.createElement("img");
+  const anchorLogo: HTMLAnchorElement = document.createElement("a");
+  text.innerHTML =
+    'Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>';
+  anchorLogo.href = "https://www.weatherapi.com/";
+  anchorLogo.classList.add("bg-white/50", "p-1", "rounded-lg");
+  logo.src = "//cdn.weatherapi.com/v4/images/weatherapi_logo.png";
+  logo.alt = "Weather data by WeatherAPI.com";
+  logo.classList.add("h-6");
+  anchorLogo.appendChild(logo);
+  div.appendChild(text);
+  div.appendChild(anchorLogo);
+  return div;
+}
+
+function createSearchandApiDiv(): HTMLDivElement {
+  const div: HTMLDivElement = document.createElement("div");
+  div.classList.add("md:flex", "md:justify-between", "md:flex-row-reverse");
+  div.appendChild(createSearchDiv());
+  div.appendChild(createAPIDiv());
+  return div;
 }
 
 function createSearchDiv(): HTMLDivElement {

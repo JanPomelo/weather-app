@@ -30,6 +30,6 @@ button {
 }
 
 #backgroundIMG {
-  position: absolute;
   z-index: -1;
+  position: fixed;
 }
