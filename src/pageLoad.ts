@@ -1,12 +1,14 @@
 "use strict";
 import dropDown from "./dropDownTailwind";
 import {
+  fillForeCastData,
   fillGeneralData,
   fillTodayInfo,
   fillWindAndPressure,
 } from "./fillLocationData";
 import { getData } from "./getWeatherData";
 import Background from "./img/background.jpeg";
+import { createForecast } from "./ForeCastCreate";
 
 /* ---------------
 BACKGROUND PIC FROM
@@ -33,7 +35,8 @@ function createContentDiv(): HTMLDivElement {
     "gap-3",
     "md:grid",
     "md:grid-cols-2",
-    "md:grid-rows-2"
+    "md:grid-rows-2",
+    'px-5'
   );
   div.appendChild(createGeneralInformationDiv());
   const todayDiv: HTMLDivElement = document.createElement("div");
@@ -137,17 +140,17 @@ function createTodayInfo(): HTMLDivElement {
   rainSnowPercent.classList.add("font-bold", "text-lg");
   const astroInfoStatic: HTMLElement = document.createElement("p");
   astroInfoStatic.classList.add("font-bold", "text-lg");
-  astroInfoStatic.innerText = "Sunrise/Sunset";
+  astroInfoStatic.innerText = "Sunrise / Sunset";
   const astroInfo: HTMLElement = document.createElement("div");
-  astroInfo.classList.add("font-bold", "text-lg", "flex");
+  astroInfo.classList.add("font-bold", "text-lg", "flex", 'items-center', 'flex-wrap');
   const sunRiseSymbol: HTMLElement = document.createElement("span");
-  sunRiseSymbol.classList.add("material-symbols-outlined");
+  sunRiseSymbol.classList.add("material-symbols-outlined", 'text-sm');
   sunRiseSymbol.innerText = "Sunny";
   const sunRiseText: HTMLElement = document.createElement("span");
   sunRiseText.id = "sunRise";
   sunRiseText.classList.add("mr-3");
   const sunSetSymbol: HTMLElement = document.createElement("span");
-  sunSetSymbol.classList.add("material-symbols-outlined");
+  sunSetSymbol.classList.add("material-symbols-outlined", 'text-sm');
   sunSetSymbol.innerText = "wb_twilight";
   const sunSetText: HTMLElement = document.createElement("span");
   sunSetText.id = "sunSet";
@@ -263,26 +266,6 @@ function toggleDropDownLogo(button: HTMLButtonElement): void {
   }
 }
 
-function createForecast(): HTMLDivElement {
-  const bigDiv: HTMLDivElement = document.createElement("div");
-  bigDiv.classList.add(
-    "flex",
-    "flex-col",
-    "gap-1",
-    "border-t-4",
-    "border-white",
-    "md:border-0"
-  );
-  const heading: HTMLHeadingElement = document.createElement("h3");
-  heading.classList.add("text-white", "font-bold", "text-4xl", "pl-5");
-  heading.innerText = "Forecast";
-  const div: HTMLDivElement = document.createElement("div");
-  div.classList.add();
-  bigDiv.appendChild(heading);
-  bigDiv.appendChild(div);
-  return bigDiv;
-}
-
 function createAPIDiv(): HTMLDivElement {
   const div: HTMLDivElement = document.createElement("div");
   div.classList.add(
@@ -364,6 +347,9 @@ function createInputButton(): HTMLButtonElement {
       fillGeneralData(data);
       fillTodayInfo(data);
       fillWindAndPressure(data);
+      fillForeCastData(data, "Today");
+      fillForeCastData(data, "Tomorrow");
+      fillForeCastData(data, 'TDaT');
     });
   });
   return inputButton;
