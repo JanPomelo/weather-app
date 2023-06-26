@@ -1,4 +1,5 @@
 "use strict";
+import dropDown from "./dropDownTailwind";
 import {
   fillGeneralData,
   fillTodayInfo,
@@ -35,8 +36,11 @@ function createContentDiv(): HTMLDivElement {
     "md:grid-rows-2"
   );
   div.appendChild(createGeneralInformationDiv());
-  div.appendChild(createTodayInfo());
-  div.appendChild(createWindAndPressure());
+  const todayDiv: HTMLDivElement = document.createElement('div');
+  todayDiv.classList.add('flex', 'flex-col', 'gap-5')
+  div.appendChild(todayDiv);
+  todayDiv.appendChild(createTodayInfo());
+  todayDiv.appendChild(createMoreInformation());
   div.appendChild(createForecast());
   return div;
 }
@@ -51,9 +55,9 @@ function createGeneralInformationDiv(): HTMLDivElement {
   country.id = "country";
   country.classList.add("text-lg", "pl-6", "mb-3", "font-bold");
   const tempInfos: HTMLDivElement = document.createElement("div");
-  tempInfos.classList.add("flex", "gap-2", 'items-center');
+  tempInfos.classList.add("flex", "gap-2", "items-center");
   const minTempDiv: HTMLDivElement = document.createElement("div");
-  minTempDiv.classList.add("flex", 'text-xl', 'items-center');
+  minTempDiv.classList.add("flex", "text-xl", "items-center");
   const minTempSymbol: HTMLElement = document.createElement("span");
   minTempSymbol.classList.add("material-symbols-outlined", "pb-0.5");
   minTempSymbol.innerText = "Keyboard_Double_Arrow_Down";
@@ -62,10 +66,10 @@ function createGeneralInformationDiv(): HTMLDivElement {
   const curTemp: HTMLElement = document.createElement("p");
   curTemp.id = "curTemp";
   const maxTempDiv: HTMLDivElement = document.createElement("div");
-  maxTempDiv.classList.add("flex", 'text-xl', 'items-center');
+  maxTempDiv.classList.add("flex", "text-xl", "items-center");
   const maxTempSymbol: HTMLElement = document.createElement("span");
-  maxTempSymbol.classList.add('material-symbols-outlined', 'pt-0.5');
-  maxTempSymbol.innerText = 'Keyboard_Double_Arrow_Up';
+  maxTempSymbol.classList.add("material-symbols-outlined", "pt-0.5");
+  maxTempSymbol.innerText = "Keyboard_Double_Arrow_Up";
   const maxTempText: HTMLElement = document.createElement("span");
   maxTempText.id = "maxTempText";
   curTemp.classList.add("text-4xl");
@@ -95,7 +99,7 @@ function createGeneralInformationDiv(): HTMLDivElement {
   div.appendChild(time);
   city.innerText = "Bangkok";
   country.innerText = "Thailand";
-  minTempText.innerText = '28 °C';
+  minTempText.innerText = "28 °C";
   maxTempText.innerText = "38 °C";
   curTemp.innerText = "36 °C";
   conditionText.innerText = "party snoudy";
@@ -107,7 +111,7 @@ function createTodayInfo(): HTMLDivElement {
   bigDiv.classList.add("flex", "flex-col", "gap-1");
   const heading: HTMLHeadingElement = document.createElement("h3");
   heading.classList.add("text-white", "font-bold", "text-2xl", "pl-5");
-  heading.innerText = "More Informations";
+  heading.innerText = "Today";
   const div: HTMLDivElement = document.createElement("div");
   div.classList.add(
     "grid",
@@ -125,18 +129,36 @@ function createTodayInfo(): HTMLDivElement {
   const curTime: HTMLElement = document.createElement("p");
   curTime.id = "curTime";
   curTime.classList.add("font-bold", "text-lg");
-  const curHumidStatic: HTMLElement = document.createElement("p");
-  curHumidStatic.innerText = "Humidity";
-  curHumidStatic.classList.add("font-bold", "text-lg");
-  const curHumid: HTMLElement = document.createElement("p");
-  curHumid.id = "curHumid";
-  curHumid.classList.add("font-bold", "text-lg");
+  const rainSnowExpectedStatic: HTMLElement = document.createElement("p");
+  rainSnowExpectedStatic.id = "rainSnowStatic";
+  rainSnowExpectedStatic.classList.add("font-bold", "text-lg");
+  const rainSnowPercent: HTMLElement = document.createElement("p");
+  rainSnowPercent.id = "rainSnowPercent";
+  rainSnowPercent.classList.add("font-bold", "text-lg");
+  const astroInfoStatic: HTMLElement = document.createElement("p");
+  astroInfoStatic.classList.add("font-bold", "text-lg");
+  astroInfoStatic.innerText = "Sunrise/Sunset";
+  const astroInfo: HTMLElement = document.createElement("div");
+  astroInfo.classList.add("font-bold", "text-lg", "flex");
+  const sunRiseSymbol: HTMLElement = document.createElement("span");
+  sunRiseSymbol.classList.add("material-symbols-outlined");
+  sunRiseSymbol.innerText = "Sunny";
+  const sunRiseText: HTMLElement = document.createElement("span");
+  sunRiseText.id = "sunRise";
+  sunRiseText.classList.add("mr-3");
+  const sunSetSymbol: HTMLElement = document.createElement("span");
+  sunSetSymbol.classList.add("material-symbols-outlined");
+  sunSetSymbol.innerText = "wb_twilight";
+  const sunSetText: HTMLElement = document.createElement("span");
+  sunSetText.id = "sunSet";
+  /*
   const feelsLike_Static: HTMLElement = document.createElement("p");
   feelsLike_Static.innerText = "Feels like";
   feelsLike_Static.classList.add("font-bold", "text-lg");
-  const feelsLike_C: HTMLElement = document.createElement("p");
-  feelsLike_C.id = "feelslike_c";
-  feelsLike_C.classList.add("font-bold", "text-lg");
+  const feelsLikeTemp: HTMLElement = document.createElement("p");
+  feelsLikeTemp.id = "feelslikeTemp";
+  feelsLikeTemp.classList.add("font-bold", "text-lg");
+  */
   const airQStatic: HTMLElement = document.createElement("p");
   airQStatic.innerText = "Air Quality (PM 2.5)";
   airQStatic.classList.add("font-bold", "text-lg");
@@ -145,24 +167,43 @@ function createTodayInfo(): HTMLDivElement {
   airQ.classList.add("font-bold", "text-lg");
   bigDiv.appendChild(heading);
   bigDiv.appendChild(div);
-  div.appendChild(curTimeStatic);
-  div.appendChild(curTime);
-  div.appendChild(curHumidStatic);
-  div.appendChild(curHumid);
-  div.appendChild(feelsLike_Static);
-  div.appendChild(feelsLike_C);
+  div.appendChild(rainSnowExpectedStatic);
+  div.appendChild(rainSnowPercent);
   div.appendChild(airQStatic);
   div.appendChild(airQ);
+  div.appendChild(curTimeStatic);
+  div.appendChild(curTime);
+  div.appendChild(astroInfoStatic);
+  div.appendChild(astroInfo);
+  astroInfo.appendChild(sunRiseSymbol);
+  astroInfo.appendChild(sunRiseText);
+  astroInfo.appendChild(sunSetSymbol);
+  astroInfo.appendChild(sunSetText);
   return bigDiv;
 }
 
-function createWindAndPressure(): HTMLDivElement {
+function createMoreInformation(): HTMLDivElement {
   const bigDiv: HTMLDivElement = document.createElement("div");
   bigDiv.classList.add("flex", "flex-col", "gap-1");
+  const headingDiv: HTMLDivElement = document.createElement("div");
+  headingDiv.classList.add("flex", "gap-1");
   const heading: HTMLHeadingElement = document.createElement("h3");
   heading.classList.add("text-white", "font-bold", "text-2xl", "pl-5");
-  heading.innerText = "Wind and Pressure";
+  heading.innerText = "More Information";
+  const dropDownMoreInfo: HTMLButtonElement = document.createElement("button");
+  dropDownMoreInfo.classList.add(
+    "material-symbols-outlined",
+    "bg-transparent",
+    "text-white",
+    "text-3xl"
+  );
+  dropDownMoreInfo.innerText = "keyboard_arrow_down";
+  dropDownMoreInfo.id = "dropDownMoreInfo";
   const div: HTMLDivElement = document.createElement("div");
+  dropDown(dropDownMoreInfo, div, "7rem", 500, "ease-in");
+  dropDownMoreInfo.addEventListener("click", () => {
+    toggleDropDownLogo(dropDownMoreInfo);
+  });
   div.classList.add(
     "grid",
     "grid-cols-2",
@@ -171,7 +212,9 @@ function createWindAndPressure(): HTMLDivElement {
     "rounded-xl",
     "bg-black",
     "bg-opacity-30",
-    "gap-x-2"
+    "gap-x-2",
+    "overflow-hidden",
+    "h-0"
   );
   const wind_kphStatic: HTMLElement = document.createElement("p");
   wind_kphStatic.innerText = "Wind speed";
@@ -191,15 +234,33 @@ function createWindAndPressure(): HTMLDivElement {
   const pressure_mb: HTMLElement = document.createElement("p");
   pressure_mb.id = "pressure_mb";
   pressure_mb.classList.add("font-bold", "text-lg");
+  const curHumidStatic: HTMLElement = document.createElement("p");
+  curHumidStatic.innerText = "Humidity";
+  curHumidStatic.classList.add("font-bold", "text-lg");
+  const curHumid: HTMLElement = document.createElement("p");
+  curHumid.id = "curHumid";
+  curHumid.classList.add("font-bold", "text-lg");
+  div.appendChild(curHumidStatic);
+  div.appendChild(curHumid);
   div.appendChild(wind_dirStatic);
   div.appendChild(wind_dir);
   div.appendChild(wind_kphStatic);
   div.appendChild(wind_kph);
   div.appendChild(pressure_static);
   div.appendChild(pressure_mb);
-  bigDiv.appendChild(heading);
+  bigDiv.appendChild(headingDiv);
+  headingDiv.appendChild(heading);
+  headingDiv.appendChild(dropDownMoreInfo);
   bigDiv.appendChild(div);
   return bigDiv;
+}
+
+function toggleDropDownLogo(button: HTMLButtonElement): void {
+  if (button.innerText === "keyboard_arrow_down") {
+    button.innerText = "keyboard_arrow_up";
+  } else {
+    button.innerText = "keyboard_arrow_down";
+  }
 }
 
 function createForecast(): HTMLDivElement {

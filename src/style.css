@@ -8,6 +8,11 @@
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 
+#dropDownMoreInfo {
+  font-variation-settings: "FILL" 0, "wght" 900, "GRAD" 0, "opsz" 48;
+  
+}
+
 html {
   font-family: "Quicksand", sans-serif;
 }
