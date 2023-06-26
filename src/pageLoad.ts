@@ -35,7 +35,6 @@ function createContentDiv(): HTMLDivElement {
     "gap-3",
     "md:grid",
     "md:grid-cols-2",
-    "md:grid-rows-2",
     'px-5'
   );
   div.appendChild(createGeneralInformationDiv());
@@ -329,6 +328,19 @@ function createInputField(): HTMLInputElement {
     "pl-4",
     "text-xl"
   );
+  userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      getData(userInput.value).then((data) => {
+        console.log(data);
+        fillGeneralData(data);
+        fillTodayInfo(data);
+        fillWindAndPressure(data);
+        fillForeCastData(data, "Today");
+        fillForeCastData(data, "Tomorrow");
+        fillForeCastData(data, 'TDaT');
+      })
+    }
+  });
   return userInput;
 }
 
