@@ -9,6 +9,5 @@ export async function getData(place: string): Promise<WeatherData> {
     method: "GET",
     mode: "cors",
   });
-  console.log(data);
   return data;
 }

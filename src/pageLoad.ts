@@ -5,6 +5,7 @@ import { getData } from "./getWeatherData";
 import Background from "./img/background.jpeg";
 import { createForecast } from "./ForeCastCreate";
 import { toggleIsoAnsi } from "./fillLocationData";
+import { getLocation } from "./currentPosition";
 
 /* ---------------
 BACKGROUND PIC FROM
@@ -20,10 +21,7 @@ export function createFirstContent(): void {
   document.querySelector("body").appendChild(img);
   main.appendChild(createSearchandApiDiv());
   main.appendChild(createContentDiv());
-  getData("Bangkok").then((data) => {
-    saveCurrentData(data);
-    fillAllData();
-  });
+  getLocation();
 }
 
 function createContentDiv(): HTMLDivElement {
