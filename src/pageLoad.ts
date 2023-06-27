@@ -17,7 +17,7 @@ export function createFirstContent(): void {
   const img: HTMLImageElement = document.createElement("img");
   img.src = Background;
   img.id = "backgroundIMG";
-  img.classList.add("h-full", "md:w-full", "object-cover");
+  img.classList.add("h-full", "w-full", "object-cover");
   document.querySelector("body").appendChild(img);
   main.appendChild(createSearchandApiDiv());
   main.appendChild(createContentDiv());
