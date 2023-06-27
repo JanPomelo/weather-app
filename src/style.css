@@ -2,7 +2,7 @@ input {
   border-radius: 0;
 }
 
-input[type="search"] {
+input[type="text"] {
   -webkit-appearance: none;
 }
 
