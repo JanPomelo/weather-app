@@ -10,7 +10,6 @@
 
 #dropDownMoreInfo {
   font-variation-settings: "FILL" 0, "wght" 900, "GRAD" 0, "opsz" 48;
-  
 }
 
 html {
@@ -32,6 +31,7 @@ button {
 #backgroundIMG {
   z-index: -1;
   position: fixed;
+  min-height: 100vh;
 }
 
 .hourly-divs {
