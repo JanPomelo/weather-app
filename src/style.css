@@ -32,6 +32,7 @@ button {
   z-index: -1;
   position: fixed;
   min-height: 100vh;
+  min-width: 100vw;
 }
 
 .hourly-divs {
