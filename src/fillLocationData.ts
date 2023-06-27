@@ -9,7 +9,6 @@ let currentData: WeatherData;
 
 export function toggleIsoAnsi(text: isoAnsi) {
   isoAnsiToggle = text;
-  console.log(isoAnsiToggle);
 }
 
 const windDirTranslate = [

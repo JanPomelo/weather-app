@@ -25,13 +25,16 @@ export function createFirstContent(): void {
 function createContentDiv(): HTMLDivElement {
   const div: HTMLDivElement = document.createElement("div");
   div.classList.add(
-    "grow",
     "flex",
     "flex-col",
     "gap-3",
     "md:grid",
     "md:grid-cols-2",
-    "px-3"
+    "px-3",
+    'overflow-scroll',
+    'h-4/5',
+    'md:grow',
+    'md:overflow-auto'
   );
   div.appendChild(createGeneralInformationDiv());
   const todayDiv: HTMLDivElement = document.createElement("div");
@@ -301,6 +304,7 @@ function createAPIDiv(): HTMLDivElement {
 function createSearchandApiDiv(): HTMLDivElement {
   const div: HTMLDivElement = document.createElement("div");
   div.classList.add("md:flex", "md:justify-between", "md:flex-row-reverse");
+  div.style.backgroundImage = Background;
   div.appendChild(createSearchDiv());
   div.appendChild(createAPIDiv());
   return div;
@@ -342,7 +346,6 @@ function createIsoAnsiDiv(): HTMLDivElement {
   iso.classList.add(
     "mr-2",
     "px-1",
-    "bg-white",
     "bg-gray-300",
     "rounded-b-xl",
     "w-12",
@@ -352,14 +355,18 @@ function createIsoAnsiDiv(): HTMLDivElement {
   );
   ansi.addEventListener("click", function toggleF() {
     toggleIsoAnsi("F");
+    ansi.classList.remove('bg-white');
     ansi.classList.add("bg-gray-300");
     iso.classList.remove("bg-gray-300");
+    iso.classList.add('bg-white');
     ansi.removeEventListener("click", toggleF);
     fillAllData();
     iso.addEventListener("click", function toggleC() {
       toggleIsoAnsi("°C");
+      ansi.classList.add("bg-white");
       ansi.classList.remove("bg-gray-300");
       iso.classList.add("bg-gray-300");
+      iso.classList.remove("bg-white");
       iso.removeEventListener("click", toggleC);
       ansi.addEventListener("click", toggleF);
       fillAllData();
@@ -379,7 +386,8 @@ function createInputField(): HTMLInputElement {
     "rounded-l-3xl",
     "pl-4",
     "text-xl",
-    "h-full"
+    "h-full",
+    'lg:w-96'
   );
   userInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
