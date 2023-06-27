@@ -17,7 +17,7 @@ export function createFirstContent(): void {
   const img: HTMLImageElement = document.createElement("img");
   img.src = Background;
   img.id = "backgroundIMG";
-  img.classList.add("h-full", "xl:w-full", "object-cover");
+  img.classList.add("h-full", "md:w-full", "object-cover");
   document.querySelector("body").appendChild(img);
   main.appendChild(createSearchandApiDiv());
   main.appendChild(createContentDiv());
@@ -100,12 +100,6 @@ function createGeneralInformationDiv(): HTMLDivElement {
   condition.appendChild(conditionText);
   condition.appendChild(conditionPic);
   div.appendChild(time);
-  city.innerText = "Bangkok";
-  country.innerText = "Thailand";
-  minTempText.innerText = "28 °C";
-  maxTempText.innerText = "38 °C";
-  curTemp.innerText = "36 °C";
-  conditionText.innerText = "party snoudy";
   return div;
 }
 
