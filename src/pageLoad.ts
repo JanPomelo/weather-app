@@ -20,6 +20,10 @@ export function createFirstContent(): void {
   document.querySelector("body").appendChild(img);
   main.appendChild(createSearchandApiDiv());
   main.appendChild(createContentDiv());
+  getData("Bangkok").then((data) => {
+    saveCurrentData(data);
+    fillAllData();
+  });
 }
 
 function createContentDiv(): HTMLDivElement {
@@ -31,10 +35,10 @@ function createContentDiv(): HTMLDivElement {
     "md:grid",
     "md:grid-cols-2",
     "px-3",
-    'overflow-scroll',
-    'h-4/5',
-    'md:grow',
-    'md:overflow-auto'
+    "overflow-scroll",
+    "h-4/5",
+    "md:grow",
+    "md:overflow-auto"
   );
   div.appendChild(createGeneralInformationDiv());
   const todayDiv: HTMLDivElement = document.createElement("div");
@@ -277,7 +281,7 @@ function createAPIDiv(): HTMLDivElement {
     "flex",
     "text-sm",
     "justify-between",
-    "px-5",
+    "px-4",
     "mt-2",
     "items-center",
     "md:justify-start",
@@ -286,7 +290,17 @@ function createAPIDiv(): HTMLDivElement {
   const text: HTMLElement = document.createElement("p");
   const logo: HTMLImageElement = document.createElement("img");
   const anchorLogo: HTMLAnchorElement = document.createElement("a");
-
+  //const menu: HTMLButtonElement = document.createElement("button");
+  //menu.innerText = "Menu";
+  /*menu.classList.add(
+    "bg-white",
+    "p-1",
+    "text-black",
+    "rounded-xl",
+    "border-2",
+    "border-gray-900",
+    "w-12"
+  ); */
   text.innerHTML =
     'Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>';
   anchorLogo.href = "https://www.weatherapi.com/";
@@ -295,7 +309,7 @@ function createAPIDiv(): HTMLDivElement {
   logo.alt = "Weather data by WeatherAPI.com";
   logo.classList.add("h-6");
   anchorLogo.appendChild(logo);
-
+  //div.appendChild(menu);
   div.appendChild(text);
   div.appendChild(anchorLogo);
   return div;
@@ -339,7 +353,11 @@ function createIsoAnsiDiv(): HTMLDivElement {
     "rounded-t-xl",
     "w-12",
     "bg-white",
-    "text-sm"
+    "text-sm",
+    "border-t-2",
+    "border-l-2",
+    "border-r-2",
+    "border-gray-900"
   );
   const iso: HTMLButtonElement = document.createElement("button");
   iso.innerText = "°C";
@@ -351,14 +369,18 @@ function createIsoAnsiDiv(): HTMLDivElement {
     "w-12",
     "text-sm",
     "border-t",
-    "border-black"
+    "border-black",
+    "border-b-2",
+    "border-l-2",
+    "border-r-2",
+    "border-gray-900"
   );
   ansi.addEventListener("click", function toggleF() {
     toggleIsoAnsi("F");
-    ansi.classList.remove('bg-white');
+    ansi.classList.remove("bg-white");
     ansi.classList.add("bg-gray-300");
     iso.classList.remove("bg-gray-300");
-    iso.classList.add('bg-white');
+    iso.classList.add("bg-white");
     ansi.removeEventListener("click", toggleF);
     fillAllData();
     iso.addEventListener("click", function toggleC() {
@@ -387,7 +409,7 @@ function createInputField(): HTMLInputElement {
     "pl-4",
     "text-xl",
     "h-full",
-    'lg:w-96'
+    "lg:w-96"
   );
   userInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
