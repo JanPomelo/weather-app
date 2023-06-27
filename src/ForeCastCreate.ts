@@ -10,7 +10,7 @@ export function createForecast(): HTMLDivElement {
     "md:col-span-2"
   );
   const heading: HTMLHeadingElement = document.createElement("h3");
-  heading.classList.add("text-white", "font-bold", "text-5xl", "pl-5");
+  heading.classList.add("text-white", "font-bold", "text-5xl", "pl-3");
   heading.innerText = "Forecast";
   const div: HTMLDivElement = document.createElement("div");
   div.classList.add("flex", "flex-col");
@@ -36,7 +36,7 @@ function createForeCast(day: string): HTMLDivElement {
     'xl:mr-auto'
   );
   const heading: HTMLHeadingElement = document.createElement("h3");
-  heading.classList.add("text-white", "font-bold", "text-3xl", "pl-5");
+  heading.classList.add("text-white", "font-bold", "text-3xl", "pl-3");
   heading.innerText = day;
   heading.id = day;
   const div: HTMLDivElement = document.createElement("div");

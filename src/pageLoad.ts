@@ -1,14 +1,10 @@
 "use strict";
 import dropDown from "./dropDownTailwind";
-import {
-  fillForeCastData,
-  fillGeneralData,
-  fillTodayInfo,
-  fillWindAndPressure,
-} from "./fillLocationData";
+import { saveCurrentData, fillAllData } from "./fillLocationData";
 import { getData } from "./getWeatherData";
 import Background from "./img/background.jpeg";
 import { createForecast } from "./ForeCastCreate";
+import { toggleIsoAnsi } from "./fillLocationData";
 
 /* ---------------
 BACKGROUND PIC FROM
@@ -35,7 +31,7 @@ function createContentDiv(): HTMLDivElement {
     "gap-3",
     "md:grid",
     "md:grid-cols-2",
-    'px-5'
+    "px-3"
   );
   div.appendChild(createGeneralInformationDiv());
   const todayDiv: HTMLDivElement = document.createElement("div");
@@ -49,7 +45,7 @@ function createContentDiv(): HTMLDivElement {
 
 function createGeneralInformationDiv(): HTMLDivElement {
   const div: HTMLDivElement = document.createElement("div");
-  div.classList.add("flex", "flex-col", "text-white", "pl-5");
+  div.classList.add("flex", "flex-col", "text-white", "pl-3");
   const city: HTMLHeadingElement = document.createElement("h2");
   city.id = "city";
   city.classList.add("text-5xl", "font-bold");
@@ -112,14 +108,14 @@ function createTodayInfo(): HTMLDivElement {
   const bigDiv: HTMLDivElement = document.createElement("div");
   bigDiv.classList.add("flex", "flex-col", "gap-1");
   const heading: HTMLHeadingElement = document.createElement("h3");
-  heading.classList.add("text-white", "font-bold", "text-2xl", "pl-5");
+  heading.classList.add("text-white", "font-bold", "text-2xl", "pl-3");
   heading.innerText = "Today";
   const div: HTMLDivElement = document.createElement("div");
   div.classList.add(
     "grid",
     "grid-cols-2",
     "text-white",
-    "pl-5",
+    "pl-3",
     "rounded-xl",
     "bg-black",
     "bg-opacity-30",
@@ -141,15 +137,21 @@ function createTodayInfo(): HTMLDivElement {
   astroInfoStatic.classList.add("font-bold", "text-lg");
   astroInfoStatic.innerText = "Sunrise / Sunset";
   const astroInfo: HTMLElement = document.createElement("div");
-  astroInfo.classList.add("font-bold", "text-lg", "flex", 'items-center', 'flex-wrap');
+  astroInfo.classList.add(
+    "font-bold",
+    "text-lg",
+    "flex",
+    "items-center",
+    "flex-wrap"
+  );
   const sunRiseSymbol: HTMLElement = document.createElement("span");
-  sunRiseSymbol.classList.add("material-symbols-outlined", 'text-sm');
+  sunRiseSymbol.classList.add("material-symbols-outlined", "text-sm");
   sunRiseSymbol.innerText = "Sunny";
   const sunRiseText: HTMLElement = document.createElement("span");
   sunRiseText.id = "sunRise";
   sunRiseText.classList.add("mr-3");
   const sunSetSymbol: HTMLElement = document.createElement("span");
-  sunSetSymbol.classList.add("material-symbols-outlined", 'text-sm');
+  sunSetSymbol.classList.add("material-symbols-outlined", "text-sm");
   sunSetSymbol.innerText = "wb_twilight";
   const sunSetText: HTMLElement = document.createElement("span");
   sunSetText.id = "sunSet";
@@ -162,7 +164,7 @@ function createTodayInfo(): HTMLDivElement {
   feelsLikeTemp.classList.add("font-bold", "text-lg");
   */
   const airQStatic: HTMLElement = document.createElement("p");
-  airQStatic.innerText = "Air Quality (PM 2.5)";
+  airQStatic.innerText = "Air Quality PM 2.5";
   airQStatic.classList.add("font-bold", "text-lg");
   const airQ: HTMLElement = document.createElement("p");
   airQ.id = "airQ";
@@ -190,7 +192,7 @@ function createMoreInformation(): HTMLDivElement {
   const headingDiv: HTMLDivElement = document.createElement("div");
   headingDiv.classList.add("flex", "gap-1");
   const heading: HTMLHeadingElement = document.createElement("h3");
-  heading.classList.add("text-white", "font-bold", "text-2xl", "pl-5");
+  heading.classList.add("text-white", "font-bold", "text-2xl", "pl-3");
   heading.innerText = "More Information";
   const dropDownMoreInfo: HTMLButtonElement = document.createElement("button");
   dropDownMoreInfo.classList.add(
@@ -210,7 +212,7 @@ function createMoreInformation(): HTMLDivElement {
     "grid",
     "grid-cols-2",
     "text-white",
-    "pl-5",
+    "pl-3",
     "rounded-xl",
     "bg-black",
     "bg-opacity-30",
@@ -281,6 +283,7 @@ function createAPIDiv(): HTMLDivElement {
   const text: HTMLElement = document.createElement("p");
   const logo: HTMLImageElement = document.createElement("img");
   const anchorLogo: HTMLAnchorElement = document.createElement("a");
+
   text.innerHTML =
     'Powered by <a href="https://www.weatherapi.com/" title="Weather API">WeatherAPI.com</a>';
   anchorLogo.href = "https://www.weatherapi.com/";
@@ -289,6 +292,7 @@ function createAPIDiv(): HTMLDivElement {
   logo.alt = "Weather data by WeatherAPI.com";
   logo.classList.add("h-6");
   anchorLogo.appendChild(logo);
+
   div.appendChild(text);
   div.appendChild(anchorLogo);
   return div;
@@ -311,10 +315,58 @@ function createSearchDiv(): HTMLDivElement {
     "h-12",
     "mx-4",
     "md:justify-end",
-    "md:mr-10"
+    "md:mr-10",
+    "items-center"
   );
+  div.appendChild(createIsoAnsiDiv());
   div.appendChild(createInputField());
   div.appendChild(createInputButton());
+  return div;
+}
+
+function createIsoAnsiDiv(): HTMLDivElement {
+  const div: HTMLDivElement = document.createElement("div");
+  div.classList.add("flex", "flex-col");
+  const ansi: HTMLButtonElement = document.createElement("button");
+  ansi.innerText = "F";
+  ansi.classList.add(
+    "mr-2",
+    "px-1",
+    "rounded-t-xl",
+    "w-12",
+    "bg-white",
+    "text-sm"
+  );
+  const iso: HTMLButtonElement = document.createElement("button");
+  iso.innerText = "°C";
+  iso.classList.add(
+    "mr-2",
+    "px-1",
+    "bg-white",
+    "bg-gray-300",
+    "rounded-b-xl",
+    "w-12",
+    "text-sm",
+    "border-t",
+    "border-black"
+  );
+  ansi.addEventListener("click", function toggleF() {
+    toggleIsoAnsi("F");
+    ansi.classList.add("bg-gray-300");
+    iso.classList.remove("bg-gray-300");
+    ansi.removeEventListener("click", toggleF);
+    fillAllData();
+    iso.addEventListener("click", function toggleC() {
+      toggleIsoAnsi("°C");
+      ansi.classList.remove("bg-gray-300");
+      iso.classList.add("bg-gray-300");
+      iso.removeEventListener("click", toggleC);
+      ansi.addEventListener("click", toggleF);
+      fillAllData();
+    });
+  });
+  div.appendChild(ansi);
+  div.appendChild(iso);
   return div;
 }
 
@@ -326,19 +378,15 @@ function createInputField(): HTMLInputElement {
     "md:grow-0",
     "rounded-l-3xl",
     "pl-4",
-    "text-xl"
+    "text-xl",
+    "h-full"
   );
-  userInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
+  userInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
       getData(userInput.value).then((data) => {
-        console.log(data);
-        fillGeneralData(data);
-        fillTodayInfo(data);
-        fillWindAndPressure(data);
-        fillForeCastData(data, "Today");
-        fillForeCastData(data, "Tomorrow");
-        fillForeCastData(data, 'TDaT');
-      })
+        saveCurrentData(data);
+        fillAllData();
+      });
     }
   });
   return userInput;
@@ -350,18 +398,14 @@ function createInputButton(): HTMLButtonElement {
   inputButton.classList.add(
     "px-2",
     "rounded-r-3xl",
-    "material-symbols-outlined"
+    "material-symbols-outlined",
+    "h-full"
   );
   inputButton.addEventListener("click", () => {
     const inputField: HTMLInputElement = document.querySelector("input");
     getData(inputField.value).then((data) => {
-      console.log(data);
-      fillGeneralData(data);
-      fillTodayInfo(data);
-      fillWindAndPressure(data);
-      fillForeCastData(data, "Today");
-      fillForeCastData(data, "Tomorrow");
-      fillForeCastData(data, 'TDaT');
+      saveCurrentData(data);
+      fillAllData();
     });
   });
   return inputButton;

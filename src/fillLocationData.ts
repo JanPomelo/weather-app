@@ -2,6 +2,16 @@
 import { getDay } from "date-fns";
 import { WeatherData } from "./Weather";
 
+type isoAnsi = "°C" | "F";
+
+let isoAnsiToggle: isoAnsi = "°C";
+let currentData: WeatherData;
+
+export function toggleIsoAnsi(text: isoAnsi) {
+  isoAnsiToggle = text;
+  console.log(isoAnsiToggle);
+}
+
 const windDirTranslate = [
   { short: "N", long: "North" },
   { short: "E", long: "East" },
@@ -43,10 +53,21 @@ export function fillGeneralData(data: WeatherData): void {
   city.innerText = data.location.name;
   country.innerText = data.location.country;
   minTemp.innerText =
-    Math.floor(data.forecast.forecastday[0].day.mintemp_c).toString() + " °C";
-  curTemp.innerText = data.current.temp_c.toString() + " °C";
+    isoAnsiToggle === "°C"
+      ? Math.floor(data.forecast.forecastday[0].day.mintemp_c).toString() +
+        " °C"
+      : Math.floor(data.forecast.forecastday[0].day.mintemp_f).toString() +
+        " F";
+  curTemp.innerText =
+    isoAnsiToggle === "°C"
+      ? data.current.temp_c.toString() + " °C"
+      : data.current.temp_f.toString() + " F";
   maxTemp.innerText =
-    Math.round(data.forecast.forecastday[0].day.maxtemp_c).toString() + " °C";
+    isoAnsiToggle === "°C"
+      ? Math.floor(data.forecast.forecastday[0].day.maxtemp_c).toString() +
+        " °C"
+      : Math.floor(data.forecast.forecastday[0].day.maxtemp_f).toString() +
+        " F";
   conditionText.innerText = data.current.condition.text;
   conditionPic.src = data.current.condition.icon;
 }
@@ -162,7 +183,27 @@ export function fillForeCastData(data: WeatherData, day: string): void {
         " %";
     }
     childs[2].innerText =
-      Math.round(data.forecast.forecastday[i].hour[hours].temp_c).toString() +
-      " °C";
+      isoAnsiToggle === "°C"
+        ? Math.round(
+            data.forecast.forecastday[i].hour[hours].temp_c
+          ).toString() + " °C"
+        : Math.round(
+            data.forecast.forecastday[i].hour[hours].temp_f
+          ).toString() + " F";
+  }
+}
+
+export function saveCurrentData(data: WeatherData): void {
+  currentData = data;
+}
+
+export function fillAllData(): void {
+  if (currentData) {
+    fillGeneralData(currentData);
+    fillTodayInfo(currentData);
+    fillWindAndPressure(currentData);
+    fillForeCastData(currentData, "Today");
+    fillForeCastData(currentData, "Tomorrow");
+    fillForeCastData(currentData, "TDaT");
   }
 }
